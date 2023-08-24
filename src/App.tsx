@@ -4,6 +4,7 @@ import HomePage from './pages/HomePage'
 import Navigation from './components/Navigation'
 import Container from 'react-bootstrap/Container'
 import './assets/sass/App.sass'
+import NotFoundPage from './pages/NotFoundPage'
 
 function App() {
   return (
@@ -13,6 +14,8 @@ function App() {
       <Container className="py-3">
         <Routes>
           <Route path="/" element={<HomePage />} />
+
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Container>
 
