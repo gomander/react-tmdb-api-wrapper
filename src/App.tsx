@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import HomePage from './pages/HomePage'
+import PopularMoviesPage from './pages/PopularMoviesPage'
 import TopMoviesPage from './pages/TopMoviesPage'
 import NotFoundPage from './pages/NotFoundPage'
 import Navigation from './components/Navigation'
@@ -15,6 +16,8 @@ function App() {
       <Container className="py-3">
         <Routes>
           <Route path="/" element={<HomePage />} />
+
+          <Route path="/popular" element={<PopularMoviesPage />} />
 
           <Route path="/top" element={<TopMoviesPage />} />
 
