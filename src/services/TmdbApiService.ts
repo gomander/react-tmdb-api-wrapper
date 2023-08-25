@@ -21,7 +21,9 @@ const get = async <T>(endpoint: string) => {
 
 export const discover = async (
   { page, sortBy, minimumVotes }: {
-    page?: number, sortBy?: string, minimumVotes?: number
+    page?: number,
+    sortBy?: string,
+    minimumVotes?: number
   } = {}
 ) => {
   const params = new URLSearchParams({
@@ -30,7 +32,8 @@ export const discover = async (
     language: 'en-US',
     sort_by: sortBy || 'popularity.desc',
     page: page ? String(page) : '1',
-    'vote_count.gte': minimumVotes ? String(minimumVotes) : '0'
+    'vote_count.gte': minimumVotes ? String(minimumVotes) : '1',
+    'primary_release_date.lte': new Date().toISOString().split('T')[0]
   })
   return await get<DiscoverMoviesResult>(`discover/movie?${params}`)
 }

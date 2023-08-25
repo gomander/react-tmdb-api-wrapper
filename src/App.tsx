@@ -3,6 +3,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import HomePage from './pages/HomePage'
 import PopularMoviesPage from './pages/PopularMoviesPage'
 import TopMoviesPage from './pages/TopMoviesPage'
+import LatestMoviesPage from './pages/LatestMoviesPage'
 import NotFoundPage from './pages/NotFoundPage'
 import Navigation from './components/Navigation'
 import Container from 'react-bootstrap/Container'
@@ -20,6 +21,8 @@ function App() {
           <Route path="/popular" element={<PopularMoviesPage />} />
 
           <Route path="/top" element={<TopMoviesPage />} />
+
+          <Route path="/latest" element={<LatestMoviesPage />} />
 
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
