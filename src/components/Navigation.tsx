@@ -12,7 +12,6 @@ const Navigation = () => {
 				<Navbar.Toggle aria-controls="basic-navbar-nav" />
 				<Navbar.Collapse id="basic-navbar-nav">
 					<Nav className="ms-auto">
-            { /* TODO: Fix clicking these links not resetting page to 1 */ }
             <Nav.Link as={NavLink} to="/popular">Popular</Nav.Link>
             <Nav.Link as={NavLink} to="/top">Top Rated</Nav.Link>
             <Nav.Link as={NavLink} to="/latest">New Releases</Nav.Link>

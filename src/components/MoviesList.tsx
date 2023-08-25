@@ -18,10 +18,17 @@ const MoviesList = ({ queryName, queryFn }: Props) => {
     queryFn: () => queryFn(page)
   })
 
+  // TODO: Fix browser navigation buttons taking multiple clicks sometimes
+
   useEffect(() => {
     if (page === 1) return setSearchParams({})
     setSearchParams({ page: String(page) })
   }, [page])
+
+  useEffect(() => {
+    const pageParam = Number(searchParams.get('page')) || 1
+    if (page !== pageParam) setPage(pageParam)
+  }, [searchParams])
 
   return (
     <>
