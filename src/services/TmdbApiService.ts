@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { DiscoverMoviesResult } from '../types/TmdbApi.types'
 
 const API_ROOT = import.meta.env.VITE_APP_API_ROOT
 const API_KEY = import.meta.env.VITE_APP_API_KEY
@@ -12,8 +13,8 @@ const instance = axios.create({
   baseURL: API_ROOT, headers: { Authorization: `Bearer ${ACCESS_TOKEN}` }
 })
 
-const get = async (endpoint: string) => {
-  const response = await instance.get(endpoint)
+const get = async <T>(endpoint: string) => {
+  const response = await instance.get<T>(endpoint)
   return response.data
 }
 
@@ -22,7 +23,7 @@ export const discover = async (
 ) => {
   if (!page) page = 1
   if (!sortBy) sortBy = 'popularity.desc'
-  return await get(
+  return await get<DiscoverMoviesResult>(
     `discover/movie?include_adult=false&include_video=false&language=en-US&sort_by=${sortBy}&page=${page}`
   )
 }
