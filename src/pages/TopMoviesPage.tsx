@@ -9,7 +9,8 @@ const TopMoviesPage = () => {
   const [searchParams, setSearchParams] = useSearchParams()
   const [page, setPage] = useState(Number(searchParams.get('page')) || 1)
   const topMoviesQuery = useQuery({
-    queryKey: ['top-movies', page], queryFn: () => getTopMovies(page)
+    queryKey: ['top-movies', { page }],
+    queryFn: () => getTopMovies(page)
   })
 
   useEffect(() => {
