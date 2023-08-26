@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import Image from 'react-bootstrap/Image'
+import { formatDate } from '../utils/util'
 import { getMovie } from '../services/TmdbApiService'
 
 const MovieDetailsPage = () => {
@@ -27,7 +28,7 @@ const MovieDetailsPage = () => {
           <p>{movieQuery.data.overview}</p>
 
           <h2>Release date</h2>
-          <p>{movieQuery.data.release_date}</p>
+          <p>{formatDate(movieQuery.data.release_date)}</p>
 
           <h2>Rating</h2>
           <p>{movieQuery.data.vote_average} / 10</p>

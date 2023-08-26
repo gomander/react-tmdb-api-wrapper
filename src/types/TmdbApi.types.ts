@@ -1,13 +1,13 @@
 export type DiscoverMovie = {
   adult: boolean
-  backdrop_path: string
+  backdrop_path: ImagePath
   genre_ids: number[]
   id: number
   original_language: string
   original_title: string
   overview: string
   popularity: number
-  poster_path: string
+  poster_path: ImagePath
   release_date: string
   title: string
   video: boolean
@@ -24,7 +24,7 @@ export type DiscoverMoviesResult = {
 
 export type MovieDetails = {
   adult: boolean
-  backdrop_path: string
+  backdrop_path: ImagePath
   belongs_to_collection: MovieCollection | null
   budget: number
   genres: Genre[]
@@ -35,7 +35,7 @@ export type MovieDetails = {
   original_title: string
   overview: string
   popularity: number
-  poster_path: string
+  poster_path: ImagePath
   production_companies: Company[]
   release_date: string
   revenue: number
@@ -63,7 +63,7 @@ type Genre = {
 
 type Company = {
   id: number
-  logo_path: string
+  logo_path: ImagePath
   name: string
   origin_country: string
 }
@@ -73,3 +73,5 @@ type Language = {
   iso_639_1: string
   name: string
 }
+
+type ImagePath = string | null
