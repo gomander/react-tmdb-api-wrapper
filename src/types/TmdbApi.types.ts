@@ -1,4 +1,4 @@
-export type DiscoverMovie = {
+export interface DiscoverMovie {
   adult: boolean
   backdrop_path: ImagePath
   genre_ids: number[]
@@ -15,14 +15,14 @@ export type DiscoverMovie = {
   vote_count: number
 }
 
-export type DiscoverMoviesResult = {
+export interface DiscoverMoviesResult {
   page: number
   results: DiscoverMovie[]
   total_pages: number
   total_results: number
 }
 
-export type MovieDetails = {
+interface MovieDetails {
   adult: boolean
   backdrop_path: ImagePath
   belongs_to_collection: MovieCollection | null
@@ -49,29 +49,59 @@ export type MovieDetails = {
   vote_count: number
 }
 
-type MovieCollection = {
+interface MovieCollection {
   id: number
   name: string
   poster_path: string
   backdrop_path: string
 }
 
-export type Genre = {
+export interface Genre {
   id: number
   name: string
 }
 
-type Company = {
+interface Company {
   id: number
   logo_path: ImagePath
   name: string
   origin_country: string
 }
 
-type Language = {
+interface Language {
   english_name: string
   iso_639_1: string
   name: string
 }
 
 type ImagePath = string | null
+
+interface MoviePerson {
+  adult: boolean
+  gender: number
+  id: number
+  known_for_departmnent: string
+  name: string
+  original_name: string
+  popularity: number
+  profile_path: ImagePath
+  credit_id: string
+}
+
+export interface CastMember extends MoviePerson {
+  cast_id: number
+  character: string
+  order: number
+}
+
+export interface CrewMember extends MoviePerson {
+  department: string
+  job: string
+}
+
+export interface MovieDetailsWithCredits extends MovieDetails {
+  credits: {
+    cast: CastMember[]
+    crew: CrewMember[]
+  }
+}

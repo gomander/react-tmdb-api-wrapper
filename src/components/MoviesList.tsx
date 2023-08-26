@@ -41,7 +41,7 @@ const MoviesList = ({ queryName, queryFn }: Props) => {
       {
         moviesQuery.data &&
         <>
-          <ul className="movies-list justify-content-center px-0">
+          <ul className="card-list justify-content-center px-0">
             {
               moviesQuery.data.results.map(movie => (
                 <li key={movie.id}>

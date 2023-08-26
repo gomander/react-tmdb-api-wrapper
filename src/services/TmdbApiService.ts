@@ -1,6 +1,8 @@
 import axios from 'axios'
 import { API_ROOT, ACCESS_TOKEN } from '../utils/util'
-import { DiscoverMoviesResult, Genre, MovieDetails } from '../types/TmdbApi.types'
+import {
+  DiscoverMoviesResult, Genre, MovieDetailsWithCredits
+} from '../types/TmdbApi.types'
 
 const instance = axios.create({
   baseURL: API_ROOT,
@@ -54,7 +56,7 @@ export const getLatestMovies = async (page?: number) => {
 }
 
 export const getMovie = async (id: number | string) => {
-  return await get<MovieDetails>(`movie/${id}`)
+  return await get<MovieDetailsWithCredits>(`movie/${id}?append_to_response=credits`)
 }
 
 export const getGenres = async () => {

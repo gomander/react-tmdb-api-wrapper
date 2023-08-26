@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 import Image from 'react-bootstrap/Image'
 import { IMAGE_ROOT, formatDate, formatTime } from '../utils/util'
 import { getMovie } from '../services/TmdbApiService'
+import ActorCard from '../components/ActorCard'
 
 const MovieDetailsPage = () => {
   const { id } = useParams()
@@ -19,7 +20,7 @@ const MovieDetailsPage = () => {
         <>
           <h1>{movie.title}</h1>
 
-          <div className="d-flex flex-wrap row-gap-3 column-gap-4">
+          <div className="mb-3 d-flex flex-wrap row-gap-3 column-gap-4">
             <Image
               fluid
               src={`${IMAGE_ROOT}w500/${movie.poster_path}`}
@@ -53,6 +54,17 @@ const MovieDetailsPage = () => {
               }
             </div>
           </div>
+
+          <h2>Cast</h2>
+          <ul className="card-list justify-content-center px-0">
+            {
+              movie.credits.cast.map(castMember => (
+                <li key={castMember.credit_id}>
+                  <ActorCard castMember={castMember} />
+                </li>
+              ))
+            }
+          </ul>
         </>
       }
     </>
