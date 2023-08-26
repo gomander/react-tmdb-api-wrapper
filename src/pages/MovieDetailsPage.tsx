@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import Image from 'react-bootstrap/Image'
-import { formatDate } from '../utils/util'
+import { IMAGE_ROOT, formatDate, formatTime } from '../utils/util'
 import { getMovie } from '../services/TmdbApiService'
 
 const MovieDetailsPage = () => {
@@ -10,31 +10,49 @@ const MovieDetailsPage = () => {
     queryKey: ['movie', { id }],
     queryFn: () => getMovie(id!)
   })
+  const movie = movieQuery.data
 
   return (
     <>
       {
-        movieQuery.data &&
+        movie &&
         <>
-          <h1>{movieQuery.data.title}</h1>
+          <h1>{movie.title}</h1>
 
-          <Image
-            fluid
-            src={`https://image.tmdb.org/t/p/w500/${movieQuery.data.poster_path}`}
-            alt=""
-          />
+          <div className="d-flex flex-wrap row-gap-3 column-gap-4">
+            <Image
+              fluid
+              src={`${IMAGE_ROOT}w500/${movie.poster_path}`}
+              alt=""
+              width={500}
+            />
 
-          <h2>Overview</h2>
-          <p>{movieQuery.data.overview}</p>
+            <div>
+              <h2>Overview</h2>
+              <p style={{ maxWidth: '45em' }}>{movie.overview}</p>
 
-          <h2>Release date</h2>
-          <p>{formatDate(movieQuery.data.release_date)}</p>
+              <h2>Release date</h2>
+              <p>{formatDate(movie.release_date)}</p>
 
-          <h2>Rating</h2>
-          <p>{movieQuery.data.vote_average} / 10</p>
+              <h2>Rating</h2>
+              <p>{movie.vote_average} / 10</p>
 
-          <h2>Runtime</h2>
-          <p>{movieQuery.data.runtime} minutes</p>
+              <h2>Runtime</h2>
+              <p>{formatTime(movie.runtime)}</p>
+
+              {
+                movie.homepage &&
+                <>
+                  <h2>Homepage</h2>
+                  <p>
+                    <a target="_blank" href={movie.homepage}>
+                      {movie.homepage}
+                    </a>
+                  </p>
+                </>
+              }
+            </div>
+          </div>
         </>
       }
     </>
