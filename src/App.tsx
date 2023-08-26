@@ -4,6 +4,7 @@ import HomePage from './pages/HomePage'
 import PopularMoviesPage from './pages/PopularMoviesPage'
 import TopMoviesPage from './pages/TopMoviesPage'
 import LatestMoviesPage from './pages/LatestMoviesPage'
+import BrowseMoviesPage from './pages/BrowseMoviesPage'
 import MovieDetailsPage from './pages/MovieDetailsPage'
 import NotFoundPage from './pages/NotFoundPage'
 import Navigation from './components/Navigation'
@@ -25,6 +26,8 @@ function App() {
             <Route path="top" element={<TopMoviesPage />} />
 
             <Route path="latest" element={<LatestMoviesPage />} />
+
+            <Route path="browse" element={<BrowseMoviesPage />} />
           </Route>
 
           <Route path="/movie/:id" element={<MovieDetailsPage />} />

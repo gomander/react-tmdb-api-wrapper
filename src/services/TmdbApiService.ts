@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { API_ROOT, ACCESS_TOKEN } from '../utils/util'
-import { DiscoverMoviesResult, MovieDetails } from '../types/TmdbApi.types'
+import { DiscoverMoviesResult, Genre, MovieDetails } from '../types/TmdbApi.types'
 
 const instance = axios.create({
   baseURL: API_ROOT,
@@ -13,9 +13,10 @@ const get = async <T>(endpoint: string) => {
 }
 
 export const discover = async (
-  { page, sortBy, minimumVotes }: {
-    page?: number,
-    sortBy?: string,
+  { page, sortBy, genre, minimumVotes }: {
+    page?: number
+    sortBy?: string
+    genre?: number
     minimumVotes?: number
   } = {}
 ) => {
@@ -25,6 +26,7 @@ export const discover = async (
     language: 'en-US',
     region: 'US',
     sort_by: sortBy || 'popularity.desc',
+    with_genres: genre ? String(genre) : '',
     page: page ? String(page) : '1',
     'vote_count.gte': minimumVotes ? String(minimumVotes) : '1',
     'primary_release_date.lte': new Date().toISOString().split('T')[0]
@@ -53,4 +55,8 @@ export const getLatestMovies = async (page?: number) => {
 
 export const getMovie = async (id: number | string) => {
   return await get<MovieDetails>(`movie/${id}`)
+}
+
+export const getGenres = async () => {
+  return await get<{ genres: Genre[] }>('genre/movie/list?language=en')
 }

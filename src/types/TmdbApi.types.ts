@@ -56,7 +56,7 @@ type MovieCollection = {
   backdrop_path: string
 }
 
-type Genre = {
+export type Genre = {
   id: number
   name: string
 }
