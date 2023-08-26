@@ -11,7 +11,9 @@ interface Props {
   footerRight?: string
 }
 
-const ImageLinkCard = ({ link, header, image, footerLeft, footerRight }: Props) => {
+const ImageLinkCard = (
+  { link, header, image, footerLeft, footerRight }: Props
+) => {
   return (
     <Card
       as={NavLink}
@@ -38,10 +40,7 @@ const ImageLinkCard = ({ link, header, image, footerLeft, footerRight }: Props) 
 
       <Card.Footer className="d-flex justify-content-between">
         <div>{footerLeft}</div>
-        {
-          footerRight &&
-          <div>{footerRight}</div>
-        }
+        <div>{footerRight}</div>
       </Card.Footer>
     </Card>
   )

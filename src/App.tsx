@@ -6,6 +6,7 @@ import TopMoviesPage from './pages/TopMoviesPage'
 import LatestMoviesPage from './pages/LatestMoviesPage'
 import BrowseMoviesPage from './pages/BrowseMoviesPage'
 import MovieDetailsPage from './pages/MovieDetailsPage'
+import PersonDetailsPage from './pages/PersonDetailsPage'
 import NotFoundPage from './pages/NotFoundPage'
 import Navigation from './components/Navigation'
 import Container from 'react-bootstrap/Container'
@@ -31,6 +32,8 @@ function App() {
           </Route>
 
           <Route path="/movie/:id" element={<MovieDetailsPage />} />
+
+          <Route path="/person/:id" element={<PersonDetailsPage />} />
 
           <Route path="*" element={<NotFoundPage />} />
         </Routes>

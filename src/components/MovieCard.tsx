@@ -11,7 +11,7 @@ const MovieCard = ({ movie }: Props) => {
       header={movie.title}
       image={movie.poster_path}
       footerLeft={`Released ${formatDate(movie.release_date)}`}
-      footerRight={`Rated {movie.vote_average} / 10`}
+      footerRight={`Rated ${movie.vote_average} / 10`}
     />
   )
 }
