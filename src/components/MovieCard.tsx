@@ -1,37 +1,18 @@
-import Card from 'react-bootstrap/Card'
-import Image from 'react-bootstrap/Image'
-import { NavLink } from 'react-router-dom'
-import { IMAGE_ROOT, formatDate } from '../utils/util'
+import { formatDate } from '../utils/util'
 import { DiscoverMovie } from '../types/TmdbApi.types'
+import ImageLinkCard from './ImageLinkCard'
 
-interface Props {
-  movie: DiscoverMovie
-}
+interface Props { movie: DiscoverMovie }
 
 const MovieCard = ({ movie }: Props) => {
   return (
-    <Card
-      as={NavLink}
-      to={`/movie/${movie.id}`}
-      className="text-decoration-none"
-    >
-      <Card.Header>{movie.title}</Card.Header>
-
-      <Card.Body className="px-0 py-0">
-        <Image
-          fluid
-          src={`${IMAGE_ROOT}w300/${movie.poster_path}`}
-          alt=""
-          className="w-100"
-        />
-      </Card.Body>
-
-      <Card.Footer className="d-flex justify-content-between">
-        <div>Released {formatDate(movie.release_date)}</div>
-
-        <div>Rated {movie.vote_average} / 10</div>
-      </Card.Footer>
-    </Card>
+    <ImageLinkCard
+      link={`/movie/${movie.id}`}
+      header={movie.title}
+      image={movie.poster_path}
+      footerLeft={`Released ${formatDate(movie.release_date)}`}
+      footerRight={`Rated {movie.vote_average} / 10`}
+    />
   )
 }
 
