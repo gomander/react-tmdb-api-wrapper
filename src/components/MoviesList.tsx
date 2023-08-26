@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import Alert from 'react-bootstrap/Alert'
-import Pagination from '../components/Pagination'
+import Pagination from './Pagination'
+import MovieCard from './MovieCard'
 import { DiscoverMoviesResult } from '../types/TmdbApi.types'
 
 interface Props {
@@ -40,10 +41,12 @@ const MoviesList = ({ queryName, queryFn }: Props) => {
       {
         moviesQuery.data &&
         <>
-          <ul>
+          <ul className="movies-list justify-content-center px-0">
             {
               moviesQuery.data.results.map(movie => (
-                <li key={movie.id}>{movie.title}</li>
+                <li key={movie.id}>
+                  <MovieCard movie={movie} />
+                </li>
               ))
             }
           </ul>
