@@ -4,6 +4,7 @@ import HomePage from './pages/HomePage'
 import PopularMoviesPage from './pages/PopularMoviesPage'
 import TopMoviesPage from './pages/TopMoviesPage'
 import LatestMoviesPage from './pages/LatestMoviesPage'
+import MovieDetailsPage from './pages/MovieDetailsPage'
 import NotFoundPage from './pages/NotFoundPage'
 import Navigation from './components/Navigation'
 import Container from 'react-bootstrap/Container'
@@ -18,11 +19,15 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
 
-          <Route path="/popular" element={<PopularMoviesPage />} />
+          <Route path="/movies">
+            <Route path="popular" element={<PopularMoviesPage />} />
 
-          <Route path="/top" element={<TopMoviesPage />} />
+            <Route path="top" element={<TopMoviesPage />} />
 
-          <Route path="/latest" element={<LatestMoviesPage />} />
+            <Route path="latest" element={<LatestMoviesPage />} />
+          </Route>
+
+          <Route path="/movie/:id" element={<MovieDetailsPage />} />
 
           <Route path="*" element={<NotFoundPage />} />
         </Routes>

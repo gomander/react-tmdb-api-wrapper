@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { DiscoverMoviesResult } from '../types/TmdbApi.types'
+import { DiscoverMoviesResult, MovieDetails } from '../types/TmdbApi.types'
 
 const API_ROOT = import.meta.env.VITE_APP_API_ROOT
 const API_KEY = import.meta.env.VITE_APP_API_KEY
@@ -30,6 +30,7 @@ export const discover = async (
     include_adult: 'false',
     include_video: 'false',
     language: 'en-US',
+    region: 'US',
     sort_by: sortBy || 'popularity.desc',
     page: page ? String(page) : '1',
     'vote_count.gte': minimumVotes ? String(minimumVotes) : '1',
@@ -55,4 +56,8 @@ export const getLatestMovies = async (page?: number) => {
     page,
     sortBy: 'primary_release_date.desc'
   })
+}
+
+export const getMovie = async (id: number | string) => {
+  return await get<MovieDetails>(`movie/${id}`)
 }
