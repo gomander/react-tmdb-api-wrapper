@@ -1,13 +1,6 @@
 import axios from 'axios'
+import { API_ROOT, ACCESS_TOKEN } from '../utils/util'
 import { DiscoverMoviesResult, MovieDetails } from '../types/TmdbApi.types'
-
-const API_ROOT = import.meta.env.VITE_APP_API_ROOT
-const API_KEY = import.meta.env.VITE_APP_API_KEY
-const ACCESS_TOKEN = import.meta.env.VITE_APP_ACCESS_TOKEN
-
-if (!(API_ROOT && API_KEY && ACCESS_TOKEN)) {
-  throw new Error('Environment variables incorrectly configured!')
-}
 
 const instance = axios.create({
   baseURL: API_ROOT,

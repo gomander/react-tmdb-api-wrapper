@@ -1,7 +1,7 @@
 import Card from 'react-bootstrap/Card'
 import Image from 'react-bootstrap/Image'
 import { NavLink } from 'react-router-dom'
-import { formatDate } from '../utils/util'
+import { IMAGE_ROOT, formatDate } from '../utils/util'
 import { DiscoverMovie } from '../types/TmdbApi.types'
 
 interface Props {
@@ -20,7 +20,7 @@ const MovieCard = ({ movie }: Props) => {
       <Card.Body className="px-0 py-0">
         <Image
           fluid
-          src={`https://image.tmdb.org/t/p/w300/${movie.poster_path}`}
+          src={`${IMAGE_ROOT}w300/${movie.poster_path}`}
           alt=""
           className="w-100"
         />
