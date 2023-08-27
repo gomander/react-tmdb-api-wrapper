@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { API_ROOT, ACCESS_TOKEN } from '../utils/util'
+import { API_ROOT, ACCESS_TOKEN, getDateString } from '../utils/util'
 import {
   DiscoverMoviesResult, Genre, MovieDetailsWithCredits, PersonWithCredits
 } from '../types/TmdbApi.types'
@@ -15,12 +15,11 @@ const get = async <T>(endpoint: string) => {
 }
 
 export const discover = async (
-  { page, sortBy, genre, minimumVotes }: {
+  { page, sortBy, genre }: {
     page?: number
     sortBy?: string
     genre?: number
-    minimumVotes?: number
-  } = {}
+  } = {}, additionalOptions?: Record<string, string>
 ) => {
   const params = new URLSearchParams({
     include_adult: 'false',
@@ -30,9 +29,9 @@ export const discover = async (
     sort_by: sortBy || 'popularity.desc',
     with_genres: genre ? String(genre) : '',
     page: page ? String(page) : '1',
-    'vote_count.gte': minimumVotes ? String(minimumVotes) : '1',
-    'primary_release_date.lte': new Date().toISOString().split('T')[0],
-    'with_runtime.gte': '30'
+    'vote_count.gte': '250',
+    'with_runtime.gte': '30',
+    ...additionalOptions
   })
   return await get<DiscoverMoviesResult>(`discover/movie?${params}`)
 }
@@ -42,22 +41,29 @@ export const getPopularMovies = async (page?: number) => {
 }
 
 export const getTopMovies = async (page?: number) => {
-  return await discover({
-    page,
-    sortBy: 'vote_average.desc',
-    minimumVotes: 1000
-  })
+  return await discover(
+    { page, sortBy: 'vote_average.desc' },
+    { without_genres: '99' }
+  )
 }
 
-export const getLatestMovies = async (page?: number) => {
-  return await discover({
-    page,
-    sortBy: 'primary_release_date.desc'
-  })
+export const getMoviesInTheaters = async (page?: number) => {
+  const startTime = Date.now() - 1000 * 60 * 60 * 24 * 7 * 6
+  return await discover(
+    { page },
+    {
+      with_release_type: '2|3',
+      'primary_release_date.gte': getDateString(new Date(startTime)),
+      'release_date.lte': getDateString(new Date()),
+      'vote_count.gte': '0'
+    }
+  )
 }
 
 export const getMovie = async (id: number | string) => {
-  return await get<MovieDetailsWithCredits>(`movie/${id}?append_to_response=credits`)
+  return await get<MovieDetailsWithCredits>(
+    `movie/${id}?append_to_response=credits`
+  )
 }
 
 export const getGenres = async () => {
@@ -65,5 +71,7 @@ export const getGenres = async () => {
 }
 
 export const getPerson = async (id: number | string) => {
-  return await get<PersonWithCredits>(`person/${id}?append_to_response=movie_credits`)
+  return await get<PersonWithCredits>(
+    `person/${id}?append_to_response=movie_credits`
+  )
 }

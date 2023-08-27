@@ -3,7 +3,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import HomePage from './pages/HomePage'
 import PopularMoviesPage from './pages/PopularMoviesPage'
 import TopMoviesPage from './pages/TopMoviesPage'
-import LatestMoviesPage from './pages/LatestMoviesPage'
+import InTheatersPage from './pages/InTheatersPage'
 import MoviesByGenrePage from './pages/MoviesByGenrePage'
 import MovieDetailsPage from './pages/MovieDetailsPage'
 import PersonDetailsPage from './pages/PersonDetailsPage'
@@ -26,7 +26,7 @@ function App() {
 
             <Route path="top" element={<TopMoviesPage />} />
 
-            <Route path="latest" element={<LatestMoviesPage />} />
+            <Route path="in-theaters" element={<InTheatersPage />} />
 
             <Route path="by-genre" element={<MoviesByGenrePage />} />
           </Route>

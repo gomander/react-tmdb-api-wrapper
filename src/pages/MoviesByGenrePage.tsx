@@ -25,7 +25,9 @@ const MoviesByGenrePage = () => {
   const onSearch = (discoverOptions: DiscoverOptions) => {
     const params: Record<string, string> = {}
     if (discoverOptions.genre) params.genre = String(discoverOptions.genre)
-    if (discoverOptions.sort) params.sort = discoverOptions.sort
+    if (discoverOptions.sort && discoverOptions.sort !== 'popularity.desc') {
+      params.sort = discoverOptions.sort
+    }
     setSearchParams(new URLSearchParams(params))
     setQueryKey({ name: queryKey.name, ...params })
   }

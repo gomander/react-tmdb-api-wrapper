@@ -16,3 +16,7 @@ export const formatDate = (input: string) => {
 export const formatTime = (minutes: number) => {
   return `${Math.floor(minutes / 60)} hours ${minutes % 60} minutes`
 }
+
+export const getDateString = (date: Date) => {
+  return date.toISOString().split('T')[0]
+}
