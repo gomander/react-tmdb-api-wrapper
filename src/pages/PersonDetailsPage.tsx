@@ -3,6 +3,8 @@ import { useQuery } from '@tanstack/react-query'
 import Image from 'react-bootstrap/Image'
 import { getPerson } from '../services/TmdbApiService'
 import { IMAGE_ROOT, formatDate } from '../utils/util'
+import CastMovieCard from '../components/CastMovieCard'
+import CrewMovieCard from '../components/CrewMovieCard'
 
 const PersonDetailsPage = () => {
   const { id } = useParams()
@@ -74,6 +76,38 @@ const PersonDetailsPage = () => {
               }
             </div>
           </div>
+
+          <h2>Credited in</h2>
+          {
+            person.movie_credits.cast.length > 0 &&
+            <>
+              <h3>As cast</h3>
+              <ul className="card-list justify-content-center px-0">
+                {
+                  person.movie_credits.cast.map(movie => (
+                    <li key={movie.credit_id}>
+                      <CastMovieCard movie={movie} />
+                    </li>
+                  ))
+                }
+              </ul>
+            </>
+          }
+          {
+            person.movie_credits.crew.length > 0 &&
+            <>
+              <h3>As crew</h3>
+              <ul className="card-list justify-content-center px-0">
+                {
+                  person.movie_credits.crew.map(movie => (
+                    <li key={movie.credit_id}>
+                      <CrewMovieCard movie={movie} />
+                    </li>
+                  ))
+                }
+              </ul>
+            </>
+          }
         </>
       }
     </>

@@ -125,8 +125,8 @@ export interface Person {
 
 export interface PersonWithCredits extends Person {
   movie_credits: {
-    cast: {}[]
-    crew: {}[]
+    cast: CastMovie[]
+    crew: CrewMovie[]
   }
 }
 
@@ -135,4 +135,16 @@ enum Gender {
   'Female',
   'Male',
   'Non-binary'
+}
+
+export interface CastMovie extends DiscoverMovie {
+  character: string
+  credit_id: string
+  order: number
+}
+
+export interface CrewMovie extends DiscoverMovie {
+  credit_id: string
+  department: string
+  job: string
 }
