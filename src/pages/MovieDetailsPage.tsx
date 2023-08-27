@@ -21,12 +21,14 @@ const MovieDetailsPage = () => {
           <h1>{movie.title}</h1>
 
           <div className="mb-3 d-flex flex-wrap row-gap-3 column-gap-4">
-            <Image
-              fluid
-              src={`${IMAGE_ROOT}w500/${movie.poster_path}`}
-              alt=""
-              width={500}
-            />
+            <div>
+              <Image
+                fluid
+                src={`${IMAGE_ROOT}w500/${movie.poster_path}`}
+                alt=""
+                width={500}
+              />
+            </div>
 
             <div>
               <h2>Overview</h2>
@@ -40,6 +42,15 @@ const MovieDetailsPage = () => {
 
               <h2>Runtime</h2>
               <p>{formatTime(movie.runtime)}</p>
+
+              <h2>Genres</h2>
+              <ul>
+                {
+                  movie.genres.map(genre =>
+                    <li key={genre.id}>{genre.name}</li>
+                  )
+                }
+              </ul>
 
               {
                 movie.homepage &&
