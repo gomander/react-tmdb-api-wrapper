@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import Image from 'react-bootstrap/Image'
@@ -12,6 +13,11 @@ const MovieDetailsPage = () => {
     queryFn: () => getMovie(id!)
   })
   const movie = movieQuery.data
+
+  useEffect(() => {
+    if (!movie) return
+    document.title = `${movie.title} - TMDB`
+  }, [movie])
 
   return (
     <>

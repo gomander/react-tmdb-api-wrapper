@@ -1,4 +1,10 @@
+import { useEffect } from 'react'
+
 const NotFoundPage = () => {
+  useEffect(() => {
+    document.title = 'Page not found'
+  }, [])
+
   return (
     <>
       <h1>404</h1>

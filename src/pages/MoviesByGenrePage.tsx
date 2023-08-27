@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import GenreSortSelect from '../components/GenreSortSelect'
 import MoviesList from '../components/MoviesList'
@@ -31,6 +31,10 @@ const MoviesByGenrePage = () => {
     setSearchParams(new URLSearchParams(params))
     setQueryKey({ name: queryKey.name, ...params })
   }
+
+  useEffect(() => {
+    document.title = 'Movies by genre'
+  }, [])
 
   return (
     <>

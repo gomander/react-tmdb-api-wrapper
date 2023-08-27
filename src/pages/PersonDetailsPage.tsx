@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import Button from 'react-bootstrap/Button'
@@ -19,6 +19,11 @@ const PersonDetailsPage = () => {
 
   const [showAsCast, setShowAsCast] = useState(true)
   const [showAsCrew, setShowAsCrew] = useState(true)
+
+  useEffect(() => {
+    if (!person) return
+    document.title = `${person.name} - TMDB`
+  }, [person])
 
   return (
     <>
