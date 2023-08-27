@@ -7,7 +7,7 @@ import MovieCard from './MovieCard'
 import { DiscoverMoviesResult } from '../types/TmdbApi.types'
 
 interface Props {
-  queryName: string
+  queryName: string | Record<string, string>
   queryFn: (page: number) => Promise<DiscoverMoviesResult>
 }
 
@@ -21,9 +21,10 @@ const MoviesList = ({ queryName, queryFn }: Props) => {
 
   const updatePage = (newPage: number) => {
     setPage(newPage)
-    searchParams.delete('page')
-    if (newPage === 1) return setSearchParams(searchParams)
-    setSearchParams({ ...searchParams, page: String(newPage) })
+    const newParams = Object.fromEntries(searchParams.entries())
+    delete newParams.page
+    if (newPage === 1) return setSearchParams(newParams)
+    setSearchParams({ ...newParams, page: String(newPage) })
   }
 
   useEffect(() => {

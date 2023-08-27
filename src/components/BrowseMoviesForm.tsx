@@ -1,9 +1,9 @@
-import { FormEvent, useState } from 'react'
+import { FormEvent, useEffect, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import { getGenres } from '../services/TmdbApiService'
 import { useSearchParams } from 'react-router-dom'
+import { DiscoverOptions } from '../types/util.type'
 
 const sorts = [
   { label: 'Popularity', value: 'popularity.desc' },
@@ -12,49 +12,36 @@ const sorts = [
   { label: 'Revenue', value: 'revenue.desc' },
 ]
 
-const onSubmit = (e: FormEvent) => {
-  e.preventDefault()
+interface Props {
+  onSearch: (discoverOptions: DiscoverOptions) => void
 }
 
-const BrowseMoviesForm = () => {
-  const [searchParams, setSearchParams] = useSearchParams()
-  const [search] = useState(searchParams.get('search') || '')
-  const [genre] = useState(searchParams.get('genre') || '')
-  const [sort] = useState(searchParams.get('sort') || 'popularity.desc')
+const BrowseMoviesForm = ({ onSearch }: Props) => {
+  const [searchParams] = useSearchParams()
+  const [genre, setGenre] = useState(Number(searchParams.get('genre')) || 0)
+  const [sort, setSort] = useState(searchParams.get('sort') || 'popularity.desc')
   const genresQuery = useQuery({
     queryKey: ['genres'],
     queryFn: () => getGenres()
   })
 
-  const updateSearchParams = (
-    { newSearch, newGenre, newSort }: {
-      newSearch?: string
-      newGenre?: string
-      newSort?: string
-    } = {}
-  ) => {
-    const params = new URLSearchParams()
-    if (newSearch || search) params.set('search', newSearch || search)
-    if (newGenre || genre) params.set('genre', newGenre || genre)
-    if (newSort || sort) params.set('sort', newSort || sort)
-    setSearchParams(params)
+  const onSubmit = (e: FormEvent) => {
+    e.preventDefault()
+    onSearch({ genre, sort })
   }
 
-  return (
-    <Form onSubmit={onSubmit} className="d-flex flex-column row-gap-3">
-      <Form.Group controlId="movieTitle">
-        <Form.Label>Movie title</Form.Label>
-        <Form.Control type="text" />
-      </Form.Group>
+  useEffect(() => onSearch({ genre, sort }), [genre, sort])
 
+  return (
+    <Form onSubmit={onSubmit} className="d-flex flex-column row-gap-3 mb-3">
       <div className="d-flex column-gap-3">
         <Form.Group controlId="movieGenre" className="w-50">
           <Form.Label>Genre</Form.Label>
           <Form.Select
-            defaultValue={genre}
-            onChange={e => updateSearchParams({ newGenre: e.target.value })}
+            value={genre}
+            onChange={e => setGenre(Number(e.target.value))}
           >
-            <option value="">All</option>
+            <option value={0}>All</option>
             {
               genresQuery.data &&
               genresQuery.data.genres.map(genre => (
@@ -70,8 +57,8 @@ const BrowseMoviesForm = () => {
         <Form.Group controlId="movieSort" className="w-50">
           <Form.Label>Sort by</Form.Label>
           <Form.Select
-            defaultValue={sort}
-            onChange={e => updateSearchParams({ newSort: e.target.value })}
+            value={sort}
+            onChange={e => setSort(e.target.value)}
           >
             {
               sorts.map(sort => (
@@ -84,8 +71,6 @@ const BrowseMoviesForm = () => {
           </Form.Select>
         </Form.Group>
       </div>
-
-      <Button variant="primary" type="submit">Search</Button>
     </Form>
   )
 }
