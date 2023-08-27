@@ -5,9 +5,9 @@ import MoviesList from '../components/MoviesList'
 import { discover } from '../services/TmdbApiService'
 import { DiscoverOptions } from '../types/util.type'
 
-const BrowseMoviesPage = () => {
+const MoviesByGenrePage = () => {
   const [searchParams, setSearchParams] = useSearchParams()
-  const [queryName, setQueryName] = useState<Record<string, string>>(
+  const [queryKey, setQueryKey] = useState<Record<string, string>>(
     { name: 'browse-movies' }
   )
 
@@ -27,22 +27,18 @@ const BrowseMoviesPage = () => {
     if (discoverOptions.genre) params.genre = String(discoverOptions.genre)
     if (discoverOptions.sort) params.sort = discoverOptions.sort
     setSearchParams(new URLSearchParams(params))
-    setQueryName({
-      name: 'browse-movies',
-      genre: params.genre,
-      sort: params.sort
-    })
+    setQueryKey({ name: queryKey.name, ...params })
   }
 
   return (
     <>
-      <h1>Browse</h1>
+      <h1>Browse movies by genre</h1>
 
       <BrowseMoviesForm onSearch={onSearch} />
 
-      <MoviesList queryName={queryName} queryFn={search} />
+      <MoviesList queryName={queryKey} queryFn={search} />
     </>
   )
 }
 
-export default BrowseMoviesPage
+export default MoviesByGenrePage

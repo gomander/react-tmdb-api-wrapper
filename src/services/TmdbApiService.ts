@@ -31,7 +31,8 @@ export const discover = async (
     with_genres: genre ? String(genre) : '',
     page: page ? String(page) : '1',
     'vote_count.gte': minimumVotes ? String(minimumVotes) : '1',
-    'primary_release_date.lte': new Date().toISOString().split('T')[0]
+    'primary_release_date.lte': new Date().toISOString().split('T')[0],
+    'with_runtime.gte': '30'
   })
   return await get<DiscoverMoviesResult>(`discover/movie?${params}`)
 }

@@ -4,7 +4,7 @@ import HomePage from './pages/HomePage'
 import PopularMoviesPage from './pages/PopularMoviesPage'
 import TopMoviesPage from './pages/TopMoviesPage'
 import LatestMoviesPage from './pages/LatestMoviesPage'
-import BrowseMoviesPage from './pages/BrowseMoviesPage'
+import MoviesByGenrePage from './pages/MoviesByGenrePage'
 import MovieDetailsPage from './pages/MovieDetailsPage'
 import PersonDetailsPage from './pages/PersonDetailsPage'
 import NotFoundPage from './pages/NotFoundPage'
@@ -28,7 +28,7 @@ function App() {
 
             <Route path="latest" element={<LatestMoviesPage />} />
 
-            <Route path="browse" element={<BrowseMoviesPage />} />
+            <Route path="by-genre" element={<MoviesByGenrePage />} />
           </Route>
 
           <Route path="/movie/:id" element={<MovieDetailsPage />} />
