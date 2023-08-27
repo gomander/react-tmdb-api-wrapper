@@ -19,12 +19,12 @@ const MoviesList = ({ queryName, queryFn }: Props) => {
     queryFn: () => queryFn(page)
   })
 
-  // TODO: Fix browser navigation buttons taking multiple clicks sometimes
-
-  useEffect(() => {
-    if (page === 1) return setSearchParams({})
-    setSearchParams({ page: String(page) })
-  }, [page])
+  const updatePage = (newPage: number) => {
+    setPage(newPage)
+    searchParams.delete('page')
+    if (newPage === 1) return setSearchParams(searchParams)
+    setSearchParams({ ...searchParams, page: String(newPage) })
+  }
 
   useEffect(() => {
     const pageParam = Number(searchParams.get('page')) || 1
@@ -52,12 +52,12 @@ const MoviesList = ({ queryName, queryFn }: Props) => {
           </ul>
 
           <Pagination
-            page={page}
-            totalPages={10}
+            page={moviesQuery.data.page}
+            totalPages={moviesQuery.data.total_pages}
             hasPreviousPage={page > 1}
-            hasNextPage={page < 10}
-            onPreviousPage={() => setPage(page - 1)}
-            onNextPage={() => setPage(page + 1)}
+            hasNextPage={page < moviesQuery.data.total_pages}
+            onPreviousPage={() => updatePage(moviesQuery.data.page - 1)}
+            onNextPage={() => updatePage(moviesQuery.data.page + 1)}
           />
         </>
       }
