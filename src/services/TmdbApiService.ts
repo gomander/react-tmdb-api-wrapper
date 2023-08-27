@@ -66,6 +66,12 @@ export const getMovie = async (id: number | string) => {
   )
 }
 
+export const searchMovies = async (query: string, page?: number) => {
+  return await get<DiscoverMoviesResult>(
+    `search/movie?query=${query}&include_adult=false&language=en-US&page=${page || 1}&region=US`
+  )
+}
+
 export const getGenres = async () => {
   return await get<{ genres: Genre[] }>('genre/movie/list?language=en')
 }

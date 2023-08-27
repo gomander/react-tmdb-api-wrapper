@@ -8,6 +8,7 @@ if (!(API_ROOT && IMAGE_ROOT && API_KEY && ACCESS_TOKEN)) {
 }
 
 export const formatDate = (input: string) => {
+  if (!input) return 'TBA'
   return Intl.DateTimeFormat(
     'en-US', { day: 'numeric', month: 'short', year: 'numeric' }
   ).format(new Date(input))
