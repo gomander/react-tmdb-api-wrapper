@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import BrowseMoviesForm from '../components/BrowseMoviesForm'
+import GenreSortSelect from '../components/GenreSortSelect'
 import MoviesList from '../components/MoviesList'
 import { discover } from '../services/TmdbApiService'
 import { DiscoverOptions } from '../types/util.type'
@@ -34,7 +34,7 @@ const MoviesByGenrePage = () => {
     <>
       <h1>Browse movies by genre</h1>
 
-      <BrowseMoviesForm onSearch={onSearch} />
+      <GenreSortSelect onSearch={onSearch} />
 
       <MoviesList queryName={queryKey} queryFn={search} />
     </>

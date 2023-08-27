@@ -16,7 +16,7 @@ interface Props {
   onSearch: (discoverOptions: DiscoverOptions) => void
 }
 
-const BrowseMoviesForm = ({ onSearch }: Props) => {
+const GenreSortSelect = ({ onSearch }: Props) => {
   const [searchParams] = useSearchParams()
   const [genre, setGenre] = useState(Number(searchParams.get('genre')) || 0)
   const [sort, setSort] = useState(searchParams.get('sort') || 'popularity.desc')
@@ -75,4 +75,4 @@ const BrowseMoviesForm = ({ onSearch }: Props) => {
   )
 }
 
-export default BrowseMoviesForm
+export default GenreSortSelect
