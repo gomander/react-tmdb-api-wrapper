@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { NavLink, useParams } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
+import Alert from 'react-bootstrap/Alert'
 import Image from 'react-bootstrap/Image'
 import { IMAGE_ROOT, formatDate, formatTime } from '../utils/util'
 import { getMovie } from '../services/TmdbApiService'
@@ -82,6 +83,16 @@ const MovieDetailsPage = () => {
               ))
             }
           </ul>
+        </>
+      }
+      {
+        movieQuery.isError &&
+        <>
+          <Alert variant="danger">The movie could not be found!</Alert>
+          <NavLink
+            to={'/'}
+            className="btn btn-primary"
+          >Go home</NavLink>
         </>
       }
     </>

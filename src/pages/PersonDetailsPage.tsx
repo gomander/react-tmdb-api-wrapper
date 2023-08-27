@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { NavLink, useParams } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
+import Alert from 'react-bootstrap/Alert'
 import Button from 'react-bootstrap/Button'
 import Collapse from 'react-bootstrap/Collapse'
 import Image from 'react-bootstrap/Image'
@@ -143,6 +144,16 @@ const PersonDetailsPage = () => {
               </Collapse>
             </>
           }
+        </>
+      }
+      {
+        personQuery.isError &&
+        <>
+          <Alert variant="danger">The person could not be found!</Alert>
+          <NavLink
+            to={'/'}
+            className="btn btn-primary"
+          >Go home</NavLink>
         </>
       }
     </>
