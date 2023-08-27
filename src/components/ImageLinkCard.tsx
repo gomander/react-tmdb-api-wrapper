@@ -34,7 +34,7 @@ const ImageLinkCard = (
         }
         {
           !image &&
-          <p>No picture available</p>
+          <span>No picture available</span>
         }
       </Card.Body>
 

@@ -1,5 +1,8 @@
+import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
+import Button from 'react-bootstrap/Button'
+import Collapse from 'react-bootstrap/Collapse'
 import Image from 'react-bootstrap/Image'
 import { getPerson } from '../services/TmdbApiService'
 import { IMAGE_ROOT, formatDate } from '../utils/util'
@@ -13,6 +16,9 @@ const PersonDetailsPage = () => {
     queryFn: () => getPerson(id!)
   })
   const person = personQuery.data
+
+  const [showAsCast, setShowAsCast] = useState(true)
+  const [showAsCrew, setShowAsCrew] = useState(true)
 
   return (
     <>
@@ -81,31 +87,55 @@ const PersonDetailsPage = () => {
           {
             person.movie_credits.cast.length > 0 &&
             <>
-              <h3>As cast</h3>
-              <ul className="card-list justify-content-center px-0">
-                {
-                  person.movie_credits.cast.map(movie => (
-                    <li key={movie.credit_id}>
-                      <CastMovieCard movie={movie} />
-                    </li>
-                  ))
-                }
-              </ul>
+              <div className="my-2 d-flex justify-content-between">
+                <h3>As cast</h3>
+
+                <Button
+                  variant="primary"
+                  onClick={() => setShowAsCast(!showAsCast)}
+                >
+                  {showAsCast ? 'Collapse' : 'Expand'}
+                </Button>
+              </div>
+
+              <Collapse in={showAsCast}>
+                <ul className="card-list justify-content-center px-0">
+                  {
+                    person.movie_credits.cast.map(movie => (
+                      <li key={movie.credit_id}>
+                        <CastMovieCard movie={movie} />
+                      </li>
+                    ))
+                  }
+                </ul>
+              </Collapse>
             </>
           }
           {
             person.movie_credits.crew.length > 0 &&
             <>
-              <h3>As crew</h3>
-              <ul className="card-list justify-content-center px-0">
-                {
-                  person.movie_credits.crew.map(movie => (
-                    <li key={movie.credit_id}>
-                      <CrewMovieCard movie={movie} />
-                    </li>
-                  ))
-                }
-              </ul>
+              <div className="my-2 d-flex justify-content-between">
+                <h3>As crew</h3>
+
+                <Button
+                  variant="primary"
+                  onClick={() => setShowAsCrew(!showAsCrew)}
+                >
+                  {showAsCrew ? 'Collapse' : 'Expand'}
+                </Button>
+              </div>
+
+              <Collapse in={showAsCrew}>
+                <ul className="card-list justify-content-center px-0">
+                  {
+                    person.movie_credits.crew.map(movie => (
+                      <li key={movie.credit_id}>
+                        <CrewMovieCard movie={movie} />
+                      </li>
+                    ))
+                  }
+                </ul>
+              </Collapse>
             </>
           }
         </>
