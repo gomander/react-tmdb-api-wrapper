@@ -8,7 +8,7 @@ import { DiscoverMoviesResult } from '../types/TmdbApi.types'
 
 interface Props {
   queryName: string | Record<string, string>
-  queryFn: (page: number) => Promise<DiscoverMoviesResult>
+  queryFn: (page: number) => Promise<DiscoverMoviesResult> | null
 }
 
 const MoviesList = ({ queryName, queryFn }: Props) => {
@@ -40,7 +40,7 @@ const MoviesList = ({ queryName, queryFn }: Props) => {
       }
 
       {
-        moviesQuery.data &&
+        moviesQuery.data && moviesQuery.data.results.length > 0 &&
         <>
           <ul className="card-list justify-content-center px-0">
             {
@@ -57,10 +57,15 @@ const MoviesList = ({ queryName, queryFn }: Props) => {
             totalPages={moviesQuery.data.total_pages}
             hasPreviousPage={page > 1}
             hasNextPage={page < moviesQuery.data.total_pages}
-            onPreviousPage={() => updatePage(moviesQuery.data.page - 1)}
-            onNextPage={() => updatePage(moviesQuery.data.page + 1)}
+            onPreviousPage={() => updatePage(moviesQuery.data!.page - 1)}
+            onNextPage={() => updatePage(moviesQuery.data!.page + 1)}
           />
         </>
+      }
+
+      {
+        moviesQuery.data && moviesQuery.data.results.length === 0 &&
+        <Alert variant="warning">No results</Alert>
       }
     </>
   )

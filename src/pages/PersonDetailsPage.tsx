@@ -34,24 +34,27 @@ const PersonDetailsPage = () => {
           <h1>{person.name}</h1>
 
           <div className="mb-3 d-flex flex-wrap row-gap-3 column-gap-4">
-            <div>
-              <Image
-                fluid
-                src={`${IMAGE_ROOT}w500/${person.profile_path}`}
-                alt=""
-                width={500}
-              />
-            </div>
+            {
+              person.profile_path &&
+              <div>
+                <Image
+                  fluid
+                  src={`${IMAGE_ROOT}w500/${person.profile_path}`}
+                  alt=""
+                  width={500}
+                />
+              </div>
+            }
 
             <div>
               <h2>Biography</h2>
-              <p style={{ maxWidth: '45em' }}>{person.biography}</p>
+              <p style={{ maxWidth: '45em' }}>{person.biography || 'unavailable'}</p>
 
               <h2>Birthday</h2>
               <p>{formatDate(person.birthday)}</p>
 
               <h2>Place of birth</h2>
-              <p>{person.place_of_birth}</p>
+              <p>{person.place_of_birth || 'unavailable'}</p>
 
               {
                 person.deathday &&
@@ -89,7 +92,13 @@ const PersonDetailsPage = () => {
             </div>
           </div>
 
-          <h2>Credited in</h2>
+          {
+            (
+              person.movie_credits.cast.length > 0 ||
+              person.movie_credits.crew.length > 0
+            ) &&
+            <h2>Credited in</h2>
+          }
           {
             person.movie_credits.cast.length > 0 &&
             <>

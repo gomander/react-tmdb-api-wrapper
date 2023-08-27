@@ -1,4 +1,5 @@
 import { FormEvent, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 
@@ -7,7 +8,8 @@ interface Props {
 }
 
 const SearchForm = ({ handleSearch }: Props) => {
-  const [query, setQuery] = useState('')
+  const [searchParams] = useSearchParams()
+  const [query, setQuery] = useState(searchParams.get('query') || '')
 
   return (
     <Form
