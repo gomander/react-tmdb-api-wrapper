@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react'
-import { MovieDetailsWithCredits } from '../types/TmdbApi.types'
+import {
+  MovieDetails, MovieDetailsWithCreditsAndSimilar
+} from '../types/TmdbApi.types'
+import { simplifyMovie } from '../utils/util'
 
 const useHistory = () => {
-  const [history, setHistory] = useState<MovieDetailsWithCredits[]>(
+  const [history, setHistory] = useState<MovieDetails[]>(
     JSON.parse(localStorage.getItem('history') || '[]')
   )
 
@@ -12,9 +15,13 @@ const useHistory = () => {
 
   const get = () => history
 
-  const push = (movie: MovieDetailsWithCredits) => {
+  const push = (movie: MovieDetailsWithCreditsAndSimilar) => {
     if (history[0]?.id === movie.id) return
-    setHistory([movie, ...history.filter(m => m.id !== movie.id)].slice(0, 10))
+    const simplifiedMovie = simplifyMovie(movie)
+    setHistory([
+      simplifiedMovie,
+      ...history.filter(m => m.id !== movie.id)
+    ].slice(0, 10))
   }
 
   return [get, push] as const

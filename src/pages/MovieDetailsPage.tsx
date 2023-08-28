@@ -37,6 +37,7 @@ const MovieDetailsPage = () => {
   const [showCast, setShowCast] = useState(true)
   const [showCrew, setShowCrew] = useState(false)
   const [showCollection, setShowCollection] = useState(true)
+  const [showSimilar, setShowSimilar] = useState(false)
 
   return (
     <>
@@ -141,7 +142,7 @@ const MovieDetailsPage = () => {
             movie.belongs_to_collection && collectionQuery.data &&
             <>
               <div className="my-2 d-flex justify-content-between">
-                <h2>Movies in "{movie.belongs_to_collection.name}"</h2>
+                <h2>{movie.belongs_to_collection.name}</h2>
 
                 <Button
                   variant="primary"
@@ -157,6 +158,33 @@ const MovieDetailsPage = () => {
                     collectionQuery.data.parts.map(part => (
                       <li key={part.id}>
                         <MovieCard movie={part} />
+                      </li>
+                    ))
+                  }
+                </ul>
+              </Collapse>
+            </>
+          }
+          {
+            movie.similar.results.length > 0 &&
+            <>
+              <div className="my-2 d-flex justify-content-between">
+                <h2>Similar movies</h2>
+
+                <Button
+                  variant="primary"
+                  onClick={() => setShowSimilar(!showSimilar)}
+                >
+                  {showSimilar ? 'Collapse' : 'Expand'}
+                </Button>
+              </div>
+
+              <Collapse in={showSimilar}>
+                <ul className="card-list justify-content-center px-0">
+                  {
+                    movie.similar.results.map(similarMovie => (
+                      <li key={similarMovie.id}>
+                        <MovieCard movie={similarMovie} />
                       </li>
                     ))
                   }

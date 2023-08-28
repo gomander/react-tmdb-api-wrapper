@@ -1,3 +1,7 @@
+import {
+  MovieDetails, MovieDetailsWithCreditsAndSimilar
+} from '../types/TmdbApi.types'
+
 export const API_ROOT = import.meta.env.VITE_API_ROOT
 export const IMAGE_ROOT = import.meta.env.VITE_IMAGE_ROOT
 export const API_KEY = import.meta.env.VITE_API_KEY
@@ -20,4 +24,12 @@ export const formatTime = (minutes: number) => {
 
 export const getDateString = (date: Date) => {
   return date.toISOString().split('T')[0]
+}
+
+export const simplifyMovie = (movie: MovieDetailsWithCreditsAndSimilar) => {
+  const simplifiedMovie = structuredClone(movie) as MovieDetails
+  if ('credits' in simplifiedMovie) delete simplifiedMovie.credits
+  if ('similar' in simplifiedMovie) delete simplifiedMovie.similar
+  simplifiedMovie.vote_average = Math.round(movie.vote_average * 10) / 10
+  return simplifiedMovie
 }

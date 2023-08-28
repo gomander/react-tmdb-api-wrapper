@@ -22,7 +22,7 @@ export interface DiscoverMoviesResult {
   total_results: number
 }
 
-interface MovieDetails {
+export interface MovieDetails {
   adult: boolean
   backdrop_path: ImagePath
   belongs_to_collection: DiscoverMovieCollection | null
@@ -99,11 +99,12 @@ export interface CrewMember extends MoviePerson {
   job: string
 }
 
-export interface MovieDetailsWithCredits extends MovieDetails {
+export interface MovieDetailsWithCreditsAndSimilar extends MovieDetails {
   credits: {
     cast: CastMember[]
     crew: CrewMember[]
   }
+  similar: DiscoverMoviesResult
 }
 
 export interface Person {
