@@ -6,6 +6,7 @@ import Image from 'react-bootstrap/Image'
 import { IMAGE_ROOT, formatDate, formatTime } from '../utils/util'
 import { getMovie } from '../services/TmdbApiService'
 import ActorCard from '../components/ActorCard'
+import useHistory from '../hooks/useHistory'
 
 const MovieDetailsPage = () => {
   const { id } = useParams()
@@ -15,9 +16,12 @@ const MovieDetailsPage = () => {
   })
   const movie = movieQuery.data
 
+  const [_getHistory, pushHistory] = useHistory()
+
   useEffect(() => {
     if (!movie) return
     document.title = `${movie.title} - TMDB`
+    pushHistory(movie)
   }, [movie])
 
   return (

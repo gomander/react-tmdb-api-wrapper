@@ -1,8 +1,8 @@
 import { formatDate } from '../utils/util'
-import { DiscoverMovie } from '../types/TmdbApi.types'
+import { DiscoverMovie, MovieDetailsWithCredits } from '../types/TmdbApi.types'
 import ImageLinkCard from './ImageLinkCard'
 
-interface Props { movie: DiscoverMovie }
+interface Props { movie: DiscoverMovie | MovieDetailsWithCredits }
 
 const MovieCard = ({ movie }: Props) => {
   return (
