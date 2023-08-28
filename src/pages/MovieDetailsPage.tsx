@@ -1,12 +1,16 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { NavLink, useParams } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import Alert from 'react-bootstrap/Alert'
+import Button from 'react-bootstrap/Button'
+import Collapse from 'react-bootstrap/Collapse'
 import Image from 'react-bootstrap/Image'
 import { IMAGE_ROOT, formatDate, formatTime } from '../utils/util'
-import { getMovie } from '../services/TmdbApiService'
+import { getCollection, getMovie } from '../services/TmdbApiService'
 import ActorCard from '../components/ActorCard'
+import CrewCard from '../components/CrewCard'
 import useHistory from '../hooks/useHistory'
+import MovieCard from '../components/MovieCard'
 
 const MovieDetailsPage = () => {
   const { id } = useParams()
@@ -16,6 +20,12 @@ const MovieDetailsPage = () => {
   })
   const movie = movieQuery.data
 
+  const collectionQuery = useQuery({
+    enabled: !!movie?.belongs_to_collection,
+    queryKey: ['collection', { id: movie?.belongs_to_collection?.id }],
+    queryFn: () => getCollection(movie?.belongs_to_collection?.id)
+  })
+
   const [_getHistory, pushHistory] = useHistory()
 
   useEffect(() => {
@@ -23,6 +33,10 @@ const MovieDetailsPage = () => {
     document.title = `${movie.title} - TMDB`
     pushHistory(movie)
   }, [movie])
+
+  const [showCast, setShowCast] = useState(true)
+  const [showCrew, setShowCrew] = useState(false)
+  const [showCollection, setShowCollection] = useState(true)
 
   return (
     <>
@@ -77,16 +91,79 @@ const MovieDetailsPage = () => {
             </div>
           </div>
 
-          <h2>Cast</h2>
-          <ul className="card-list justify-content-center px-0">
-            {
-              movie.credits.cast.map(castMember => (
-                <li key={castMember.credit_id}>
-                  <ActorCard castMember={castMember} />
-                </li>
-              ))
-            }
-          </ul>
+          <div className="my-2 d-flex justify-content-between">
+            <h2>Cast</h2>
+
+            <Button
+              variant="primary"
+              onClick={() => setShowCast(!showCast)}
+            >
+              {showCast ? 'Collapse' : 'Expand'}
+            </Button>
+          </div>
+
+          <Collapse in={showCast}>
+            <ul className="card-list justify-content-center px-0">
+              {
+                movie.credits.cast.map(castMember => (
+                  <li key={castMember.credit_id}>
+                    <ActorCard castMember={castMember} />
+                  </li>
+                ))
+              }
+            </ul>
+          </Collapse>
+
+          <div className="my-2 d-flex justify-content-between">
+            <h2>Crew</h2>
+
+            <Button
+              variant="primary"
+              onClick={() => setShowCrew(!showCrew)}
+            >
+              {showCrew ? 'Collapse' : 'Expand'}
+            </Button>
+          </div>
+
+          <Collapse in={showCrew}>
+            <ul className="card-list justify-content-center px-0">
+              {
+                movie.credits.crew.map(crewMember => (
+                  <li key={crewMember.credit_id}>
+                    <CrewCard crewMember={crewMember} />
+                  </li>
+                ))
+              }
+            </ul>
+          </Collapse>
+
+          {
+            movie.belongs_to_collection && collectionQuery.data &&
+            <>
+              <div className="my-2 d-flex justify-content-between">
+                <h2>Movies in "{movie.belongs_to_collection.name}"</h2>
+
+                <Button
+                  variant="primary"
+                  onClick={() => setShowCollection(!showCollection)}
+                >
+                  {showCollection ? 'Collapse' : 'Expand'}
+                </Button>
+              </div>
+
+              <Collapse in={showCollection}>
+                <ul className="card-list justify-content-center px-0">
+                  {
+                    collectionQuery.data.parts.map(part => (
+                      <li key={part.id}>
+                        <MovieCard movie={part} />
+                      </li>
+                    ))
+                  }
+                </ul>
+              </Collapse>
+            </>
+          }
         </>
       }
       {

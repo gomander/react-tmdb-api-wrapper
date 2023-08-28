@@ -25,7 +25,7 @@ export interface DiscoverMoviesResult {
 interface MovieDetails {
   adult: boolean
   backdrop_path: ImagePath
-  belongs_to_collection: MovieCollection | null
+  belongs_to_collection: DiscoverMovieCollection | null
   budget: number
   genres: Genre[]
   homepage: string
@@ -49,7 +49,7 @@ interface MovieDetails {
   vote_count: number
 }
 
-interface MovieCollection {
+interface DiscoverMovieCollection {
   id: number
   name: string
   poster_path: string
@@ -120,7 +120,7 @@ export interface Person {
   name: string
   place_of_birth: string
   popularity: number
-  profile_path: string
+  profile_path: ImagePath
 }
 
 export interface PersonWithCredits extends Person {
@@ -147,4 +147,13 @@ export interface CrewMovie extends DiscoverMovie {
   credit_id: string
   department: string
   job: string
+}
+
+export interface MovieCollectionDetails {
+  id: number
+  name: string
+  overview: string
+  poster_path: ImagePath
+  backdrop_path: ImagePath
+  parts: DiscoverMovie[]
 }
