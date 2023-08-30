@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router-dom'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import HomePage from './pages/HomePage'
-import PopularMoviesPage from './pages/PopularMoviesPage'
+import TrendingMoviesPage from './pages/TrendingMoviesPage'
 import TopMoviesPage from './pages/TopMoviesPage'
 import InTheatersPage from './pages/InTheatersPage'
 import MoviesByGenrePage from './pages/MoviesByGenrePage'
@@ -26,7 +26,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
 
           <Route path="/movies">
-            <Route path="trending" element={<PopularMoviesPage />} />
+            <Route path="trending" element={<TrendingMoviesPage />} />
 
             <Route path="top" element={<TopMoviesPage />} />
 
