@@ -15,7 +15,7 @@ const TrendingMoviesPage = () => {
 
       <MoviesList
         queryName="trending-movies"
-        queryFn={() => getTrendingMovies(timeframe)}
+        queryFn={page => getTrendingMovies(timeframe, page)}
       />
     </>
   )

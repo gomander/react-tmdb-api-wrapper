@@ -61,9 +61,9 @@ export const getMoviesInTheaters = async (page?: number) => {
   )
 }
 
-export const getTrendingMovies = async (timeframe: 'day' | 'week') => {
+export const getTrendingMovies = async (timeframe: 'day' | 'week', page?: number) => {
   return await get<DiscoverMoviesResult>(
-    `trending/movie/${timeframe}?language=en-US`
+    `trending/movie/${timeframe}?language=en-US&page=${page || 1}`
   )
 }
 
