@@ -10,6 +10,7 @@ import MovieDetailsPage from './pages/MovieDetailsPage'
 import PersonDetailsPage from './pages/PersonDetailsPage'
 import NotFoundPage from './pages/NotFoundPage'
 import Navigation from './components/Navigation'
+import Spinner from './components/Spinner'
 import Container from 'react-bootstrap/Container'
 import './assets/sass/App.sass'
 
@@ -17,6 +18,8 @@ function App() {
   return (
     <>
       <Navigation />
+
+      <Spinner />
 
       <Container className="py-3">
         <Routes>
