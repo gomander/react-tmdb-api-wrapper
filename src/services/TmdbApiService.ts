@@ -2,7 +2,7 @@ import axios from 'axios'
 import { API_ROOT, ACCESS_TOKEN, getDateString } from '../utils/util'
 import {
   DiscoverMoviesResult, Genre, MovieCollectionDetails,
-  MovieDetailsWithCreditsAndSimilar, PersonWithCredits
+  MovieDetailsWithCreditsAndSimilar, PersonWithCredits, Timeframe
 } from '../types/TmdbApi.types'
 
 const instance = axios.create({
@@ -61,7 +61,9 @@ export const getMoviesInTheaters = async (page?: number) => {
   )
 }
 
-export const getTrendingMovies = async (timeframe: 'day' | 'week', page?: number) => {
+export const getTrendingMovies = async (
+  timeframe: Timeframe, page?: number
+) => {
   return await get<DiscoverMoviesResult>(
     `trending/movie/${timeframe}?language=en-US&page=${page || 1}`
   )

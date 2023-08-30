@@ -158,3 +158,5 @@ export interface MovieCollectionDetails {
   backdrop_path: ImagePath
   parts: DiscoverMovie[]
 }
+
+export type Timeframe = 'day' | 'week'
