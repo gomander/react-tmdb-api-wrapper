@@ -1,19 +1,24 @@
-import { useEffect } from 'react'
-import { getPopularMovies } from '../services/TmdbApiService'
+import { useEffect, useState } from 'react'
+import { getTrendingMovies } from '../services/TmdbApiService'
 import MoviesList from '../components/MoviesList'
 
-const PopularMoviesPage = () => {
+const TrendingMoviesPage = () => {
+  const [timeframe, setTimeframe] = useState<'day' | 'week'>('day')
+
   useEffect(() => {
-    document.title = 'Popular movies'
+    document.title = 'Trending movies'
   }, [])
 
   return (
     <>
-      <h1>Popular Movies</h1>
+      <h1>Trending Movies</h1>
 
-      <MoviesList queryName="popular-movies" queryFn={getPopularMovies} />
+      <MoviesList
+        queryName="trending-movies"
+        queryFn={() => getTrendingMovies(timeframe)}
+      />
     </>
   )
 }
 
-export default PopularMoviesPage
+export default TrendingMoviesPage

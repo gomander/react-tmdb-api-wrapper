@@ -30,6 +30,5 @@ export const simplifyMovie = (movie: MovieDetailsWithCreditsAndSimilar) => {
   const simplifiedMovie = structuredClone(movie) as MovieDetails
   if ('credits' in simplifiedMovie) delete simplifiedMovie.credits
   if ('similar' in simplifiedMovie) delete simplifiedMovie.similar
-  simplifiedMovie.vote_average = Math.round(movie.vote_average * 10) / 10
   return simplifiedMovie
 }

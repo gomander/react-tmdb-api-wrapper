@@ -26,7 +26,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
 
           <Route path="/movies">
-            <Route path="popular" element={<PopularMoviesPage />} />
+            <Route path="trending" element={<PopularMoviesPage />} />
 
             <Route path="top" element={<TopMoviesPage />} />
 
