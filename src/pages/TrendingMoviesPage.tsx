@@ -23,8 +23,16 @@ const TrendingMoviesPage = () => {
   }, [])
 
   useEffect(() => {
-    if (timeframe === 'day') return setSearchParams()
-    setSearchParams({ timeframe })
+    const newParams = Object.fromEntries(searchParams.entries())
+    if (
+      newParams.page === '1' ||
+      timeframe !== (newParams.timeframe || 'day')
+    ) {
+      delete newParams.page
+    }
+    delete newParams.timeframe
+    if (timeframe === 'day') return setSearchParams(newParams)
+    setSearchParams({ ...newParams, timeframe })
   }, [timeframe])
 
   return (

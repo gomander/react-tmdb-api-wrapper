@@ -6,7 +6,7 @@ import { discover } from '../services/TmdbApiService'
 import { DiscoverOptions } from '../types/util.type'
 
 const MoviesByGenrePage = () => {
-  const [searchParams, setSearchParams] = useSearchParams()
+  const [searchParams] = useSearchParams()
   const [queryKey, setQueryKey] = useState<Record<string, string>>(
     { name: 'browse-movies' }
   )
@@ -28,7 +28,6 @@ const MoviesByGenrePage = () => {
     if (discoverOptions.sort && discoverOptions.sort !== 'popularity.desc') {
       params.sort = discoverOptions.sort
     }
-    setSearchParams(new URLSearchParams(params))
     setQueryKey({ name: queryKey.name, ...params })
   }
 
@@ -40,7 +39,7 @@ const MoviesByGenrePage = () => {
     <>
       <h1>Browse movies by genre</h1>
 
-      <GenreSortSelect onSearch={onSearch} />
+      <GenreSortSelect search={onSearch} />
 
       <MoviesList queryName={queryKey} queryFn={search} />
     </>

@@ -13,11 +13,11 @@ const sorts = [
 ]
 
 interface Props {
-  onSearch: (discoverOptions: DiscoverOptions) => void
+  search: (discoverOptions: DiscoverOptions) => void
 }
 
-const GenreSortSelect = ({ onSearch }: Props) => {
-  const [searchParams] = useSearchParams()
+const GenreSortSelect = ({ search }: Props) => {
+  const [searchParams, setSearchParams] = useSearchParams()
   const [genre, setGenre] = useState(Number(searchParams.get('genre')) || 0)
   const [sort, setSort] = useState(searchParams.get('sort') || 'popularity.desc')
   const genresQuery = useQuery({
@@ -27,10 +27,22 @@ const GenreSortSelect = ({ onSearch }: Props) => {
 
   const onSubmit = (e: FormEvent) => {
     e.preventDefault()
-    onSearch({ genre, sort })
+    search({ genre, sort })
   }
 
-  useEffect(() => onSearch({ genre, sort }), [genre, sort])
+  useEffect(() => {
+    const newParams = Object.fromEntries(searchParams.entries())
+    if (genre && String(genre) !== newParams.genre) {
+      newParams.genre = String(genre)
+      delete newParams.page
+    } else if (!genre) delete newParams.genre
+    if (sort !== (newParams.sort || 'popularity.desc')) {
+      newParams.sort = sort
+      delete newParams.page
+    } else if (sort === 'popularity.desc') delete newParams.sort
+    setSearchParams(newParams)
+    search({ genre, sort })
+  }, [genre, sort])
 
   return (
     <Form onSubmit={onSubmit} className="d-flex flex-column row-gap-3 mb-3">
