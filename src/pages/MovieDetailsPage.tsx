@@ -73,7 +73,11 @@ const MovieDetailsPage = () => {
               <ul>
                 {
                   movie.genres.map(genre =>
-                    <li key={genre.id}>{genre.name}</li>
+                    <li key={genre.id}>
+                      <NavLink to={`/movies/by-genre?genre=${genre.id}`}>
+                        {genre.name}
+                      </NavLink>
+                    </li>
                   )
                 }
               </ul>
